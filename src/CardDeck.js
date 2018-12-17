@@ -1,9 +1,29 @@
-// const SPADES="S";
-// const CLUBS="C";
-// const HEARTS="H";
-// const DIAMONDS="D";
+export const Suits = {
+    SPADES: "S",
+    CLUBS: "C",
+    HEARTS: "H",
+    DIAMONDS: "D"
+};
 
-class CardDeck {
+export const Ranks =  ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+export const RanksValues = {
+    A: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 7,
+    8: 8,
+    9: 9,
+    10: 10,
+    J: 11,
+    Q: 12,
+    K: 13
+};
+
+export class CardDeck {
 
     _cards = [
         'AS', '2S', '3S', '4S', '5S', '6S', '7S', '8S', '9S', '10S', 'JS', 'QS', 'KS',
@@ -21,16 +41,8 @@ class CardDeck {
 
             let cardName = c;
             let imageName = c;
-            let suite = c.substr(c.length-1);
-            let value = c.substr(0, c.length-1);
-
-            // switch (c.substring(1)) {
-            //     case SPADES: suite=SPADES; break;
-            //     case CLUBS: suite=CLUBS; break;
-            //     case DIAMONDS: suite=DIAMONDS; break;
-            //     case HEARTS: suite=HEARTS; break;
-            // }
-
+            let suite = this.getSuite(c);
+            let value = this.getValue(c);
 
             cards.push({
                 name: cardName,
@@ -43,14 +55,20 @@ class CardDeck {
         return this.shuffle(cards);
     }
 
-    shuffle(cards){
+    shuffle(cards) {
         for (let i = cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [cards[i], cards[j]] = [cards[j], cards[i]];
         }
         return cards;
     }
+
+    getSuite(c) {
+        return c.substr(c.length - 1)
+    }
+
+    getValue(c) {
+        return c.substr(0, c.length - 1);
+    }
+
 }
-
-
-export default CardDeck;

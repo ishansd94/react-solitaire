@@ -15,6 +15,10 @@ class Stack extends Component {
         });
     }
 
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     console.log(prevState)
+    // }
+
     onDragOver(event) {
         event.preventDefault();
     }
@@ -23,9 +27,7 @@ class Stack extends Component {
         event.preventDefault();
         let card = JSON.parse(event.dataTransfer.getData("card"));
 
-        console.log(card)
-
-        if(card){
+        if (card) {
             this.props.onCardDrop(card, index);
         }
     }
@@ -37,9 +39,9 @@ class Stack extends Component {
             let card;
 
             if (index === this.state.cards.length - 1) {
-                card = <li key={c.name}><Card cardName={c.imageName} hidden={false} stackId={index}/></li>
+                card = <li key={c.name}><Card name={c.name} hidden={false} stackId={index}/></li>
             } else {
-                card = <li key={c.name}><Card cardName={c.imageName} hidden={true}/></li>
+                card = <li key={c.name}><Card name={c.name} hidden={true}/></li>
             }
 
             return card;
@@ -50,7 +52,9 @@ class Stack extends Component {
             <div
                 className="card-stack"
                 onDragOver={(e) => this.onDragOver(e)}
-                onDrop={(e) => {this.onDrop(e, this.props.index)}}
+                onDrop={(e) => {
+                    this.onDrop(e, this.props.index)
+                }}
             >
                 <ul style={StackStyles}>
                     {cards}

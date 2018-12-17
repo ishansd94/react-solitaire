@@ -4,38 +4,58 @@ import RedBack from '../../assets/cards/RED_BACK.svg'
 
 class Card extends Component {
 
-    state={
-        cardName:'',
-        card: null,
+    state = {
+        name: '',
+        image: null,
+        stackId: null,
+        hidden: true
     };
 
     componentDidMount() {
-        const card = require('../../assets/cards/'+this.props.cardName+'.svg');
-        this.setState({
-            cardName: this.props.cardName ? this.props.cardName : "None",
-            card: card
-        });
 
+        let card = {
+            name: '',
+            image: null,
+            stackId: null,
+            hidden: true
+        };
+
+        if (this.props.hidden) {
+            card.image = RedBack;
+
+        } else {
+            card.image = require('../../assets/cards/' + this.props.name + '.svg');
+
+        }
+
+        card.stackId = this.props.stackId;
+        card.hidden = this.props.hidden;
+        card.name = this.props.name ? this.props.name : "NONE";
+
+        this.setState(card);
     }
 
-    onDragStart(event, card){
-        event.dataTransfer.setData("card", JSON.stringify({
-            name: card,
-            stackId: this.props.stackId
-        }));
+    onDragStart(event) {
+        event.dataTransfer.setData("card", JSON.stringify(this.state));
+    }
+
+    onClick(event){
+        console.log(this.state)
     }
 
 
     render() {
 
-        const front =  <img alt={this.state.cardName} src={this.state.card} height="150px" />;
+        const card = <img alt={this.state.name} src={this.state.image} height="150px"/>;
 
-        const back =   <img alt={this.state.cardName} src={RedBack} height="150px" />;
-
-        return(
-            this.props.hidden ?
-                <div className="playing-card"> {back} </div> :
-                <div className="playing-card" draggable onDragStart={(e)=> this.onDragStart(e, this.state.cardName)} > {front} </div>
+        return (
+            this.state.hidden ?
+                <div className="playing-card"> {card} </div> :
+                <div className="playing-card"
+                     draggable
+                     onDragStart={(e) => this.onDragStart(e)}
+                     onClick={(e)=>{this.onClick(e)}}
+                > {card} </div>
         );
     }
 
