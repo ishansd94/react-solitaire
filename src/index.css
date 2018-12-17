@@ -12,3 +12,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/*.playing-card{*/
+  /*margin: 5px;*/
+  /*border: 1px solid;*/
+/*}*/
+
+.card-stack{
+  border: 2px solid lightblue;
+  margin: auto;
+}
+
+.card-stack > ul{
+  align-content: center;
+}
+
+#root{
+  padding-top: 20px;
+}
